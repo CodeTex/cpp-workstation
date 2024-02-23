@@ -1,0 +1,10 @@
+BUILD_DIRS = $(shell find . -type d -name build)
+EXE_FILES = $(shell find . -type f -name *.exe)
+
+test:
+	@echo $(BUILD_DIRS)
+	@echo $(EXE_FILES)
+
+clean:
+	rm -rf $(BUILD_DIRS)
+	rm -rf $(EXE_FILES)
