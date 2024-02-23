@@ -16,7 +16,7 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 LIB_DIRS := $(OPENCV_DIR)/x64/mingw/lib $(OPENCV_DIR)/x64/mingw/bin
 LIB_FLAGS := $(addprefix -L,$(LIB_DIRS))
 
-LMODULES := opencv_core opencv_imgproc
+LMODULES := opencv_core opencv_dnn opencv_highgui opencv_imgcodecs opencv_imgproc opencv_objdetect opencv_videoio
 LDFLAGS := $(LIB_FLAGS) $(addprefix -l,$(addsuffix 490,$(LMODULES)))
 
 CXX := g++
