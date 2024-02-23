@@ -1,0 +1,21 @@
+TARGET_EXEC := dynamic_discovery
+
+BUILD_DIR := ./build
+SRC_DIRS := ./src
+
+CXX := g++
+CPPFLAGS := -Wall -Wextra -g
+
+SRCS := $(shell find $(SRC_DIRS) -name *.cpp)
+OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
+
+$(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
+	$(CXX) $(OBJS) -o $@
+
+$(BUILD_DIR)/%.cpp.o: %.cpp
+	mkdir -p $(dir $@)
+	$(CXX) $(CPPFLAGS) -c $< -o $@
+
+.PHONY: clean
+clean:
+	rm -rf $(BUILD_DIR)
