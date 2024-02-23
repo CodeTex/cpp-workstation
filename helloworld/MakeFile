@@ -1,0 +1,13 @@
+TARGET_EXEC := helloworld
+
+BUILD_DIR := .
+SRC_DIRS := .
+
+CXX := g++
+
+build:
+	$(CXX) -o $(BUILD_DIR)/$(TARGET_EXEC) $(SRC_DIRS)/$(TARGET_EXEC).cpp
+
+.PHONY: clean
+clean:
+	rm -rf $(BUILD_DIR)/$(TARGET_EXEC).exe
