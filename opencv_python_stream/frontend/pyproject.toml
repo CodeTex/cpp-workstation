@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "octo"
 description = "Graphical user interface frontend"
 requires-python = ">=3.12"
-dependencies = ["pygrabber"]
+dependencies = ["opencv-python", "Pillow", "pygrabber"]
 dynamic = ["version"]
 
 [project.scripts]
@@ -20,9 +20,14 @@ package-dir = { "" = "src" }
 version = { attr = "octo.__init__.__version__" }
 
 [tool.ruff] # --------------------------------------------------------- ruff ---
+line-length = 90
 
 [tool.ruff.format]
 docstring-code-format = true
 
 [tool.ruff.lint]
 select = ["A", "B", "C90", "E", "F", "I", "N", "PL", "RUF", "SIM", "W"]
+
+[tool.ruff.lint.pycodestyle]
+ignore-overlong-task-comments = true
+max-line-length = 100
