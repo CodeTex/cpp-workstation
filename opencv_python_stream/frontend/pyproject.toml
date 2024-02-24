@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project] # -------------------------------------------------------- project ---
+name = "octo"
+description = "Graphical user interface frontend"
+requires-python = ">=3.12"
+dependencies = ["pygrabber"]
+dynamic = ["version"]
+
+[project.scripts]
+octo = "octo.__main__:main"
+
+[tool.setuptools] # --------------------------------------------- setuptools ---
+packages = ["octo"]
+package-dir = { "" = "src" }
+
+[tool.setuptools.dynamic]
+version = { attr = "octo.__init__.__version__" }
+
+[tool.ruff] # --------------------------------------------------------- ruff ---
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = ["A", "B", "C90", "E", "F", "I", "N", "PL", "RUF", "SIM", "W"]
