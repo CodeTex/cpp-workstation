@@ -1,0 +1,37 @@
+TARGET_EXEC := calc_brightest
+
+BUILD_DIR := ./build
+INC_DIRS := ./include
+SRC_DIRS := ./src
+
+OPENCV_DIR := C:/opencv/install
+
+SRCS := $(shell find $(SRC_DIRS) -name *.cpp)
+OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
+
+MANUAL_INC_DIRS := $(OPENCV_DIR)/include
+INC_DIRS := $(OPENCV_DIR)/include $(shell find $(INC_DIRS) -type d)
+INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+
+LIB_DIRS := $(OPENCV_DIR)/x64/mingw/lib $(OPENCV_DIR)/x64/mingw/bin
+LIB_FLAGS := $(addprefix -L,$(LIB_DIRS))
+
+LMODULES := opencv_core opencv_highgui opencv_imgproc opencv_videoio
+LDFLAGS := $(LIB_FLAGS) $(addprefix -l,$(addsuffix 490,$(LMODULES)))
+
+CXX := g++
+CPPFLAGS := $(INC_FLAGS) -Wall -Wextra -g
+
+$(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
+	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
+
+$(BUILD_DIR)/%.cpp.o: %.cpp
+	mkdir -p $(dir $@)
+	$(CXX) $(CPPFLAGS) -c $< -o $@ $(LDFLAGS)
+
+run:
+	@./$(BUILD_DIR)/$(TARGET_EXEC)
+
+.PHONY: clean
+clean:
+	rm -rf $(BUILD_DIR)
