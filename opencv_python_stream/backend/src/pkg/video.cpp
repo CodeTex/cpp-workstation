@@ -1,3 +1,4 @@
+#include <ctime>
 #include <iostream>
 
 #include <opencv2/core.hpp>
@@ -51,14 +52,19 @@ void drawWindow(VideoCapture& cap, bool mirrorFlag, int neighbors)
             Scalar color(0, 255, 0); // Green rectangle
             drawRectangleAroundPoint(outputFrame, brightestPoint, neighbors, thickness, color);
 
+            // Write timestamp on frame
+            time_t now = time(nullptr);
+            std::string timestamp = cv::format("Timestamp : %s", ctime(&now));
+            putText(outputFrame, timestamp, Point(5, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 255, 0), 2);
+
             // Write FPS on frame
             double fpsCount = tm.getFPS();
             std::string fpsString = cv::format("FPS : %.2f", fpsCount);
-            putText(outputFrame, fpsString, Point(5, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 255, 0), 2);
+            putText(outputFrame, fpsString, Point(5, 35), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 255, 0), 2);
 
             // Write the brightest point on frame
             std::string pointString = cv::format("Nearest Point : (%d,%d)", brightestPoint.x, brightestPoint.y);
-            putText(outputFrame, pointString, Point(5, 35), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 255, 0), 2);
+            putText(outputFrame, pointString, Point(5, 55), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 255, 0), 2);
         }        
 
         imshow("Webcam", outputFrame);
