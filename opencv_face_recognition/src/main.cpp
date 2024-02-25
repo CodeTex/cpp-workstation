@@ -61,6 +61,8 @@ void processVideoFrames(VideoCapture& capture, Ptr<FaceDetectorYN>& detector, bo
     Mat frame;
     int nFrame = 0;
 
+    const int borderWidth = 2;
+
     for (;;) {
         if (!capture.read(frame)) {
             std::cerr << "Can't grab frame! Stop\n";
@@ -74,7 +76,7 @@ void processVideoFrames(VideoCapture& capture, Ptr<FaceDetectorYN>& detector, bo
         tm.stop();
         Mat result = frame.clone();
         // Draw results on the input image
-        visualize(result, nFrame, faces, tm.getFPS());
+        visualize(result, nFrame, faces, tm.getFPS(), borderWidth);
         // Visualize results
         imshow("Live", result);
         int key = waitKey(1);
