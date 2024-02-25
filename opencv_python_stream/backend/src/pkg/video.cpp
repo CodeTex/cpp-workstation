@@ -24,6 +24,8 @@ void drawWindow(VideoCapture& cap, bool mirrorFlag, int neighbors)
 {
     namedWindow("Webcam", WINDOW_AUTOSIZE);
 
+    TickMeter tm;
+
     while (true) {
         Mat frame, outputFrame;
 
@@ -41,12 +43,19 @@ void drawWindow(VideoCapture& cap, bool mirrorFlag, int neighbors)
         }
 
         if (neighbors > 0) {
+            tm.start();
             Point brightestPoint = findBrightestPoint(outputFrame, neighbors);
+            tm.stop();
 
             int thickness = 2; // Pixel thickness of the rectangle
             Scalar color(0, 255, 0); // Green rectangle
             drawRectangleAroundPoint(outputFrame, brightestPoint, neighbors, thickness, color);
-        }
+
+            // Write FPS on frame
+            double fpsCount = tm.getFPS();
+            std::string fpsString = cv::format("FPS : %.2f", fpsCount);
+            putText(outputFrame, fpsString, Point(5, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 255, 0), 2);
+        }        
 
         imshow("Webcam", outputFrame);
 

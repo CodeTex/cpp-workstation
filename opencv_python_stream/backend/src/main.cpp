@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
 
     int deviceIndex = stoi(firstArg);
     bool mirrorFlag = checkBooleanFlag(argc, argv, "-m");
-    int neighbors = checkIntFlag(argc, argv, "-n", 0);
+    int neighbors = checkIntFlag(argc, argv, "-n", 1);
 
     VideoCapture cap(deviceIndex);
     if (!cap.isOpened()) {
